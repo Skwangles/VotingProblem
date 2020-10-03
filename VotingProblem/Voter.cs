@@ -6,7 +6,7 @@ namespace VotingProblem
 {
     class Voter
     {
-        private bool isInRace;
+        public bool isInRace;
         int candidateNumber;
         public Voter( int number)
         {
@@ -18,11 +18,14 @@ namespace VotingProblem
             int counted = 0;//resets count to 0 always
             for(int inc = 0; inc < votes.Length; inc++)
             {
-                if(int.Parse(votes[inc][0]) == candidateNumber)
+               var stringy = votes[inc];
+                
+                
+                if (int.Parse(stringy[0].ToString()) == candidateNumber)
                 {
                     counted++;
                 }
-
+                
             }
 
             if (isInRace)//checks if the candidate has been eliminated from the race or not. 
@@ -36,13 +39,26 @@ namespace VotingProblem
             
         }
 
-        public string[,] Eliminate(string[] vote)
+        public string[] Eliminate(string[] vote)
         {
-            //here remove the Candidate's number and shift all others to the left. 
+             
+            for (int size = 0; size < vote.Length; size++)
+            {
+                vote[size] = vote[size].Replace(candidateNumber.ToString(), "");
+                if (vote[size].Length < 5)
+                {
+                    vote[size] += "0";//adds the 0 to the end for 5 numbers   
+                }
+            }
 
+            isInRace = false;
             return vote;
         }
 
+        public string Number()
+        {
+            return candidateNumber.ToString();
+        }
 
 
     }
